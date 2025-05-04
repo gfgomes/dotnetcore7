@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uRCFbiBodEE+B/68/R9J7iaIl3R8dacg9jQ2sij1SUdT34Dwg2xDN4RLFRbKktvAuHcoPCAaEHtg2NFqb1a73A==",
+  "dgSpecHash": "L5k3VYFuy+KXN/uTZZqjm+Hjt0RFZkn9E13RR/53q1LKN4WtuYNlJ8UpiEpWusFFaSJeuoBNZC+EsfFJDy8mgQ==",
   "success": true,
-  "projectFilePath": "D:\\dev\\playground\\repos\\dotnet\\dotnet_core_7\\FirstProject\\FirstProject.csproj",
+  "projectFilePath": "D:\\dev\\playground\\repos\\dotnet\\dotnetcore7\\Cap2\\FirstProject\\FirstProject.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

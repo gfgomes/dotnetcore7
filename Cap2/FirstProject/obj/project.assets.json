@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dev\\playground\\repos\\dotnet\\dotnet_core_7\\FirstProject\\FirstProject.csproj",
+      "projectUniqueName": "D:\\dev\\playground\\repos\\dotnet\\dotnetcore7\\Cap2\\FirstProject\\FirstProject.csproj",
       "projectName": "FirstProject",
-      "projectPath": "D:\\dev\\playground\\repos\\dotnet\\dotnet_core_7\\FirstProject\\FirstProject.csproj",
+      "projectPath": "D:\\dev\\playground\\repos\\dotnet\\dotnetcore7\\Cap2\\FirstProject\\FirstProject.csproj",
       "packagesPath": "C:\\Users\\Gabriel\\.nuget\\packages\\",
-      "outputPath": "D:\\dev\\playground\\repos\\dotnet\\dotnet_core_7\\FirstProject\\obj\\",
+      "outputPath": "D:\\dev\\playground\\repos\\dotnet\\dotnetcore7\\Cap2\\FirstProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Gabriel\\AppData\\Roaming\\NuGet\\NuGet.Config",

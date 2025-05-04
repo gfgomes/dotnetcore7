@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using FirstProject.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace FirstProject.Controllers;
 
