@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 
 namespace LanguageFeatures.Controllers
 {
@@ -7,7 +6,8 @@ namespace LanguageFeatures.Controllers
 
         public ViewResult Index()
         {
-            return View(new string[] { "C#", "Language", "Features" });
+            Product[] products = Product.GetProducts();
+            return View(new string[] { products[0].Name });
         }
     }
 }
