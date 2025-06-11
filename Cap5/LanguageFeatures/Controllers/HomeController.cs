@@ -6,6 +6,8 @@ namespace LanguageFeatures.Controllers
 
         public ViewResult Index()
         {
+            Console.WriteLine("Index action executed");
+
             Product?[] products = Product.GetProducts();
 
             return View(new string[] {
