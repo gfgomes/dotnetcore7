@@ -6,13 +6,17 @@ namespace LanguageFeatures.Controllers
 
         public ViewResult Index()
         {
-            Console.WriteLine("Index action executed");
-
-            Product?[] products = Product.GetProducts();
-
-            return View(new string[] {
-                $"Name: {products[0]?.Name}, Price: { products[0]?.Price }"
-            });
+            Dictionary<string, Product> products
+                    = new Dictionary<string, Product>
+                    {
+                        ["Kayak"] = new Product { Name = "Kayak", Price = 275M },
+                        ["Lifejacket"] = new Product
+                        {
+                            Name = "Lifejacket",
+                            Price = 48.95M
+                        }
+                    };
+            return View("Index", products.Keys);
         }
     }
 }
