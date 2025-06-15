@@ -6,7 +6,7 @@ namespace LanguageFeatures.Controllers
 
         public ViewResult Index()
         {
-
+            // Teste remoto
             object[] data = new object[] { 275M, 29.95M,"apple", "orange", 100, 10 };
             decimal total = 0;
             for (int i = 0; i < data.Length; i++)
