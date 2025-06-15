@@ -7,13 +7,19 @@ namespace LanguageFeatures.Controllers
         public ViewResult Index()
         {
 
-            object[] data = new object[] { 275M, 29.95M,"apple", "orange", 100, 10 };
+            object[] data = new object[] { 275M, 29.95M, "apple", "orange", 100, 10 };
             decimal total = 0;
+
             for (int i = 0; i < data.Length; i++)
             {
-                if (data[i] is decimal d)
+                switch (data[i])
                 {
-                    total += d;
+                    case decimal decimalValue:
+                        total += decimalValue;
+                        break;
+                    case int intValue when intValue > 50:
+                        total += intValue;
+                        break;
                 }
             }
 
