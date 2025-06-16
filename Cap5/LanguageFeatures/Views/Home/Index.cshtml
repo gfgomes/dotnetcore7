@@ -11,6 +11,9 @@
 </head>
 <body>
     <ul>
+        @{
+            Console.WriteLine(Json.Serialize(Model)); // This line is for debugging purposes and will not render in the HTML output.)
+        }
         @foreach (string s in Model)
         {
             <li>@s</li>
