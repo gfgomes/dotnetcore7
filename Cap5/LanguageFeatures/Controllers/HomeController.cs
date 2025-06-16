@@ -13,6 +13,8 @@ namespace LanguageFeatures.Controllers
                 new { Name = "Corner flag", Price = 34.95M }
             };
 
+            Console.WriteLine(products.GetType());
+
             return View(products.Select(p => p.Name));
         }
     }
