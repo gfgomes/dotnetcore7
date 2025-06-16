@@ -15,7 +15,7 @@ namespace LanguageFeatures.Controllers
 
             Console.WriteLine(products.GetType());
 
-            return View(products.Select(p => p.Name));
+            return View(products.Select(p => p.GetType().Name));
         }
     }
 }
