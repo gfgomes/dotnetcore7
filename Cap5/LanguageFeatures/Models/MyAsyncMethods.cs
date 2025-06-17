@@ -61,6 +61,7 @@
             {
                 output.Add($"Started request for {url}");
                 var httpMessage = await client.GetAsync($"http://{url}");
+
                 results.Add(httpMessage.Content.Headers.ContentLength);
                 output.Add($"Completed request for {url}");
             }
