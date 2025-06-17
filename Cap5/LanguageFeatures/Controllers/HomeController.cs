@@ -7,7 +7,7 @@ namespace LanguageFeatures.Controllers
         public async Task<ViewResult> Index()
         {
             long? length = await MyAsyncMethods.GetPageLength();
-            length = await MyAsyncMethods.GetPageLengthConfuseAndOld();
+            //length = await MyAsyncMethods.GetPageLengthConfuseAndOld();
 
             return View(new string[] { $"Length: {length}" });
         }
