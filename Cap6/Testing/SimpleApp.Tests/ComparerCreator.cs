@@ -3,17 +3,18 @@ using System.Collections.Generic;
 
 namespace SimpleApp.Tests
 {
-    public class Comparer
+    public class ComparerCreator
     {
-        public static Comparer<U?> Get<U>(Func<U?, U?, bool> func)
+        public static Comparer<U?> GetInstance<U>(Func<U?, U?, bool> func)
         {
             return new Comparer<U?>(func);
         }
     }
 
-    public class Comparer<T> : Comparer, IEqualityComparer<T>
+    public class Comparer<T> : IEqualityComparer<T>
     {
         private Func<T?, T?, bool> comparisonFunction;
+
         public Comparer(Func<T?, T?, bool> func)
         {
             comparisonFunction = func;
@@ -28,7 +29,5 @@ namespace SimpleApp.Tests
         {
             return obj?.GetHashCode() ?? 0;
         }
-
-
     }
 }
