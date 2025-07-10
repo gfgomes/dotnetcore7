@@ -26,6 +26,9 @@ var app = builder.Build();
 //permite suporte para servir conteúdo estático da pasta wwwroot
 app.UseStaticFiles();
 
+app.MapControllerRoute("pagination",
+    "Products/Page{productPage}",
+    new { Controller = "Home", action = "Index" });
 
 //Fornece o recurso de roteamento para endpoints, permitindo que a aplicação defina rotas para controladores(classes) e ações(metodos).
 app.MapDefaultControllerRoute();
