@@ -1,6 +1,21 @@
 ﻿# 🐳 SQL Server no Docker para Desenvolvimento (.NET + EF Core)
 
 Este projeto utiliza o **Microsoft SQL Server 2022 em container Docker** como banco de dados para desenvolvimento, substituindo o LocalDB. Isso garante portabilidade, persistência e independência entre os ambientes de trabalho e casa.
+https://hub.docker.com/r/microsoft/mssql-server
+
+Featured Tags
+
+- 2022-latest
+
+```docker pull mcr.microsoft.com/mssql/server:2022-latest```
+
+- 2019-latest
+
+```docker pull mcr.microsoft.com/mssql/server:2019-latest```
+
+- 2017-latest
+
+```docker pull mcr.microsoft.com/mssql/server:2017-latest```
 
 ---
 
