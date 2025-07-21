@@ -54,3 +54,58 @@ TestResult.xml
 nunit-*.xml
 
 .vs/
+
+# VS Code
+.vscode/
+.history/
+
+# Flutter/Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.pub-cache/
+android/.gradle/
+ios/Pods/
+
+# Node (React, Vue, JS, TS)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs e temporários
+*.log
+*.tmp
+*.swp
+*.bak
+
+# IDEs
+.idea/
+*.iml
+*.iws
+
+# Web
+dist/
+build/
+.env
+.env.*
+
+# macOS e Linux
+.DS_Store
+Thumbs.db
+*.swp
+
+# Outros arquivos comuns
+*.sqlite
+*.db
+coverage/
+test-results/
+test-output/
+
+# Docker
+*.pid
+*.sock
+docker-compose.override.yml
