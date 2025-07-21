@@ -18,6 +18,10 @@ builder.Services.AddDbContext<StoreDbContext>(opts => {
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
 
+builder.Services.AddRazorPages();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 //Código padrão da criação do projeto que foi comantado
@@ -25,6 +29,8 @@ var app = builder.Build();
 
 //permite suporte para servir conteúdo estático da pasta wwwroot
 app.UseStaticFiles();
+app.UseSession();
+
 
 app.MapControllerRoute("catpage",
     "{category}/Page{productPage:int}",
@@ -42,6 +48,7 @@ app.MapControllerRoute("pagination",
 
 //Fornece o recurso de roteamento para endpoints, permitindo que a aplicação defina rotas para controladores(classes) e ações(metodos).
 app.MapDefaultControllerRoute();
+app.MapRazorPages();
 
 SeedData.EnsurePopulated(app);
 
