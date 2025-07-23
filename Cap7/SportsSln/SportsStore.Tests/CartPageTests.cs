@@ -20,7 +20,6 @@ namespace SportsStore.Tests
         [Fact]
         public void Can_Load_Cart()
         {
-
             // Arrange
             // - create a mock repository
             Product p1 = new Product { ProductID = 1, Name = "P1" };
@@ -52,6 +51,7 @@ namespace SportsStore.Tests
             // Arrange
             // - create a mock repository
             Mock<IStoreRepository> mockRepo = new Mock<IStoreRepository>();
+
             mockRepo.Setup(m => m.Products).Returns((new Product[] {
                 new Product { ProductID = 1, Name = "P1" }
             }).AsQueryable<Product>());
@@ -66,8 +66,6 @@ namespace SportsStore.Tests
             Assert.Single(testCart.Lines);
             Assert.Equal("P1", testCart.Lines.First().Product.Name);
             Assert.Equal(1, testCart.Lines.First().Quantity);
-
-
         }
     }
 }

@@ -25,6 +25,14 @@ namespace SportsStore.Pages
             //    ?? new Cart();
         }
 
+        public IActionResult OnPostRemove(long productId,
+                string returnUrl)
+        {
+            Cart.RemoveLine(Cart.Lines.First(cl =>
+                cl.Product.ProductID == productId).Product);
+            return RedirectToPage(new { returnUrl = returnUrl });
+        }
+
         public IActionResult OnPost(long productId, string returnUrl)
         {
             Product? product = repository.Products
