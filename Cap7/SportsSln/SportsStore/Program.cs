@@ -27,6 +27,8 @@ builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
 builder.Services.AddSingleton<IHttpContextAccessor,
     HttpContextAccessor>();
 
+builder.Services.AddServerSideBlazor();
+
 var app = builder.Build();
 
 //Código padrão da criação do projeto que foi comantado
@@ -54,6 +56,9 @@ app.MapControllerRoute("pagination",
 //Fornece o recurso de roteamento para endpoints, permitindo que a aplicação defina rotas para controladores(classes) e ações(metodos).
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/admin/{*catchall}", "/Admin/Index");
 
 SeedData.EnsurePopulated(app);
 
