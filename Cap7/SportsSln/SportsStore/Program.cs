@@ -39,6 +39,17 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 var app = builder.Build();
 
+if (app.Environment.IsProduction())
+{
+    app.UseExceptionHandler("/error");
+}
+
+app.UseRequestLocalization(opts => {
+    opts.AddSupportedCultures("pt-BR")
+    .AddSupportedUICultures("pt-BR")
+    .SetDefaultCulture("pt-BR");
+});
+
 //Código padrão da criação do projeto que foi comantado
 //app.MapGet("/", () => "Hello World!");
 
