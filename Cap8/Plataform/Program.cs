@@ -8,12 +8,10 @@ var app = builder.Build();
     branch.Run(async (context) => {
         await context.Response.WriteAsync($"Branch Middleware");
     });
-
 });
 
 app.UseMiddleware<Platform.QueryStringMiddleWare>();
 
 app.MapGet("/", () => "Hello World!");
-
 
 app.Run();
