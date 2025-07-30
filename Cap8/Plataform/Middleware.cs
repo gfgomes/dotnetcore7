@@ -2,7 +2,12 @@
 {
     public class QueryStringMiddleWare
     {
-        private RequestDelegate next;
+        private RequestDelegate? next;
+
+        public QueryStringMiddleWare()
+        {
+            // do nothing
+        }
 
         public QueryStringMiddleWare(RequestDelegate nextDelegate)
         {
@@ -18,9 +23,12 @@
                 {
                     context.Response.ContentType = "text/plain";
                 }
-                await context.Response.WriteAsync("Class Middleware \n");
+                await context.Response.WriteAsync("Class Middleware\n");
             }
-            await next(context);
+            if (next != null)
+            {
+                await next(context);
+            }
         }
     }
 }
