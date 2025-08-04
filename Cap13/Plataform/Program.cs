@@ -1,21 +1,20 @@
-using Plataform;
+using Platform;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
-
-app.MapGet("{first:alpha:length(3)}/{second:bool}", async context => {
-    await context.Response.WriteAsync("Request Was Routed\n");
-    foreach (var kvp in context.Request.RouteValues)
-    {
-        await context.Response
-            .WriteAsync($"{kvp.Key}: {kvp.Value}\n");
-    }
+builder.Services.Configure<RouteOptions>(opts => {
+    opts.ConstraintMap.Add("countryName",
+        typeof(CountryRouteConstraint));
 });
 
+var app = builder.Build();
 
-app.MapGet("capital/{country:regex(^uk|france|monaco$)}",
-    Capital.Endpoint);
+//CountryRouteConstraint
+app.MapGet("capital/{country:countryName}", Capital.Endpoint);
+
+app.MapGet("capital/{country:regex(^uk|france|monaco$)}", Capital.Endpoint);
+
+
 app.MapGet("size/{city?}", Population.Endpoint)
     .WithMetadata(new RouteNameMetadata("population"));
 

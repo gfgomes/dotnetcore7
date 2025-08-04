@@ -1,4 +1,4 @@
-﻿namespace Plataform
+﻿namespace Platform
 {
     public class Population
     {

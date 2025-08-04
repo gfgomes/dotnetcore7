@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Plataform
+namespace Platform
 {
     public class QueryStringMiddleWare
     {
