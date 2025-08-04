@@ -7,16 +7,17 @@ builder.Services.Configure<RouteOptions>(opts => {
         typeof(CountryRouteConstraint));
 });
 
+
 var app = builder.Build();
 
-//CountryRouteConstraint
-app.MapGet("capital/{country:countryName}", Capital.Endpoint);
+app.Map("{number:int}", async context => {
+    await context.Response.WriteAsync("Routed to the int endpoint");
+}).Add(b => ((RouteEndpointBuilder)b).Order = 1);
 
-app.MapGet("capital/{country:regex(^uk|france|monaco$)}", Capital.Endpoint);
-
-
-app.MapGet("size/{city?}", Population.Endpoint)
-    .WithMetadata(new RouteNameMetadata("population"));
+app.Map("{number:double}", async context => {
+    await context.Response
+        .WriteAsync("Routed to the double endpoint");
+}).Add(b => ((RouteEndpointBuilder)b).Order = 2);
 
 app.MapFallback(async context => {
     await context.Response.WriteAsync("Routed to fallback endpoint");
