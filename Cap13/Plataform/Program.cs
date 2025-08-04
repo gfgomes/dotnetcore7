@@ -4,7 +4,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 
-app.MapGet("{first}/{second}/{third}", async context => {
+//app.MapGet("{first}/{second}/{third}", async context => {
+//    await context.Response.WriteAsync("Request Was Routed\n");
+//    foreach (var kvp in context.Request.RouteValues)
+//    {
+//        await context.Response
+//            .WriteAsync($"{kvp.Key}: {kvp.Value}\n");
+//    }
+//});
+
+app.MapGet("{first}/{second}/{*catchall}", async context =>
+{
     await context.Response.WriteAsync("Request Was Routed\n");
     foreach (var kvp in context.Request.RouteValues)
     {
