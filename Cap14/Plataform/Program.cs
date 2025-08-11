@@ -11,7 +11,8 @@ var app = builder.Build();
 
 app.UseMiddleware<WeatherMiddleware>();
 
-app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+//app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+app.MapEndpoint<WeatherEndpoint>("endpoint/class");
 
 //IResponseFormatter formatter = TextResponseFormatter.Singleton;
 //IResponseFormatter formatter = TypeBroker.Formatter;
