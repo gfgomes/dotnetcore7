@@ -18,7 +18,6 @@ namespace Microsoft.AspNetCore.Builder
 
             app.MapGet(path, (RequestDelegate)methodInfo.CreateDelegate(typeof(RequestDelegate), endpointInstance));
 
-
         }
     }
 }
