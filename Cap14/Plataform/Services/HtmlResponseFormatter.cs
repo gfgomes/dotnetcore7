@@ -17,5 +17,7 @@
                 </body>
                 </html>");
         }
+
+        public bool RichOutput => true;
     }
 }
