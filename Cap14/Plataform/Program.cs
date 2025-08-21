@@ -5,7 +5,8 @@ using Platform.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddSingleton<IResponseFormatter, HtmlResponseFormatter>();
-builder.Services.AddTransient<IResponseFormatter, GuidService>();
+//builder.Services.AddTransient<IResponseFormatter, GuidService>();
+builder.Services.AddScoped<IResponseFormatter, GuidService>();
 
 var app = builder.Build();
 
