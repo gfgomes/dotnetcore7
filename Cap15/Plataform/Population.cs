@@ -2,11 +2,14 @@
 {
     public class Population
     {
-
-        public static async Task Endpoint(HttpContext context)
+        public static async Task Endpoint(HttpContext context,
+        ILogger<Population> logger)
         {
+            logger.LogDebug("Started processing for {path}",
+            context.Request.Path);
+
             string city = context.Request.RouteValues["city"]
-                as string ?? "london";
+            as string ?? "london";
             int? pop = null;
             switch (city.ToLower())
             {
@@ -23,13 +26,17 @@
             if (pop.HasValue)
             {
                 await context.Response
-                    .WriteAsync($"City: {city}, Population: {pop}");
+                .WriteAsync($"City: {city}, Population: {pop}");
             }
             else
             {
                 context.Response.StatusCode
-                    = StatusCodes.Status404NotFound;
+                = StatusCodes.Status404NotFound;
             }
+
+            logger.LogDebug("Finished processing for {path}",
+
+            context.Request.Path);
         }
     }
 }
