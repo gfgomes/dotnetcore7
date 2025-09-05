@@ -10,6 +10,8 @@ builder.Services.AddSession(opts =>
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 app.UseSession();
 
 app.MapGet("/session", async context =>
@@ -23,7 +25,11 @@ app.MapGet("/session", async context =>
     .WriteAsync($"Counter1: {counter1}, Counter2: {counter2}");
 });
 
-app.MapFallback(async context =>
-await context.Response.WriteAsync("Hello World!"));
+app.MapFallback(async context => {
+    await context.Response
+    .WriteAsync($"HTTPS Request: {context.Request.IsHttps} \n");
+
+    await context.Response.WriteAsync("Hello World!");
+});
 
 app.Run();
