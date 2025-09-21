@@ -1,26 +1,42 @@
 using Platform.Services;
+using Platform.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddDistributedSqlServerCache(opts => {
-// opts.ConnectionString
-// = builder.Configuration["ConnectionStrings:CacheConnection"];
-// opts.SchemaName = "dbo";
-// opts.TableName = "DataCache";
-//});
-
-builder.Services.AddOutputCache();
-
-//builder.Services.AddResponseCaching();
+builder.Services.AddOutputCache(opts =>
+{
+    opts.AddBasePolicy(policy =>
+    {
+        policy.Cache();
+        policy.Expire(TimeSpan.FromSeconds(10));
+    });
+    opts.AddPolicy("30sec", policy =>
+    {
+        policy.Cache();
+        policy.Expire(TimeSpan.FromSeconds(30));
+    });
+});
 
 builder.Services.AddSingleton<IResponseFormatter, HtmlResponseFormatter>();
 
+builder.Services.AddDbContext<CalculationContext>(opts =>
+{
+    opts.UseSqlServer(
+        builder.Configuration["ConnectionStrings:CalcConnection"]);
+});
+
 var app = builder.Build();
 
-//app.UseResponseCaching();
 app.UseOutputCache();
 
-app.MapEndpoint<Platform.SumEndpoint>("/sum/{count:int=1000000000}").CacheOutput();
+app.MapEndpoint<Platform
+    .SumEndpoint>("/sum/{count:int=1000000000}")
+    .CacheOutput();
+
+app.MapEndpoint<Platform
+    .SumEndpoint>("/sum30/{count:int=1000000000}")
+    .CacheOutput("30sec");
 
 app.MapGet("/", async context =>
 {
