@@ -1,24 +1,37 @@
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace WebApp
+{
+	public static class Program
+	{
+		public static async Task Main(string[] args)
+		{
+			var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DataContext>(opts => {
-    opts.UseSqlServer(builder.Configuration["ConnectionStrings:ProductConnection"]);
-    opts.EnableSensitiveDataLogging(true);
-});
+			_ = builder.Services.AddDbContext<DataContext>(opts =>
+			{
+				_ = opts.UseSqlServer(builder.Configuration["ConnectionStrings:ProductConnection"]);
+				_ = opts.EnableSensitiveDataLogging(true);
+			});
 
-var app = builder.Build();
+			var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+			_ = app.UseMiddleware<TestMiddleware>();
 
+			_ = app.MapGet("/", () => "Hello World!");
 
-//Cria uma scope e obtem o serviÁo necess·rio para popular o banco de dados
-// (essa abordagem È necess·ria porque o DataContext È registrado como scoped por padr„o)
-// como scoped, ele È criado uma vez por requisiÁ„o, e n„o uma vez por aplicaÁ„o
-// essa abordagem faz o papel que um request faria, mas sem a necessidade de um request
-var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+			// Cria uma scope e obtem o servi√ßo necess√°rio para popular o banco de dados  
+			// (essa abordagem √© necess√°ria porque o DataContext √© registrado como scoped por padr√£o)  
+			// como scoped, ele √© criado uma vez por requisi√ß√£o, e n√£o uma vez por aplica√ß√£o  
+			// essa abordagem faz o papel que um request faria, mas sem a necessidade de um request  
+			using (var scope = app.Services.CreateScope())
+			{
+				var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+				SeedData.SeedDatabase(context);
+			}
 
-SeedData.SeedDatabase(context);
-
-app.Run();
+			await app.RunAsync().ConfigureAwait(false);
+		}
+	}
+}
