@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using WebApp.Models;
-
 
 namespace WebApp.Controllers
 {
@@ -22,16 +22,24 @@ namespace WebApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Product?> GetProduct(long id)
+        public async Task<IActionResult> GetProduct(long id)
         {
-            return await context.Products.FindAsync(id);
+            Product? p = await context.Products.FindAsync(id);
+            if (p == null)
+            {
+                return NotFound();
+            }
+            return Ok(p);
         }
 
         [HttpPost]
-        public async Task SaveProduct([FromBody] Product product)
+        public async Task<IActionResult>
+                SaveProduct([FromBody] ProductBindingTarget target)
         {
-            await context.Products.AddAsync(product);
+            Product p = target.ToProduct();
+            await context.Products.AddAsync(p);
             await context.SaveChangesAsync();
+            return Ok(p);
         }
 
         [HttpPut]
@@ -50,6 +58,13 @@ namespace WebApp.Controllers
                 Name = string.Empty
             });
             await context.SaveChangesAsync();
+        }
+
+        [HttpGet("redirect")]
+        public IActionResult Redirect()
+        {
+            //return Redirect("/api/products/1");
+            return RedirectToAction(nameof(GetProduct), new { Id = 1 });
         }
     }
 }
