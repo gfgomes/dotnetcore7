@@ -1,37 +1,65 @@
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
+using System.Text.Json;
 
-namespace WebApp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DataContext>(opts =>
 {
-	public static class Program
-	{
-		public static async Task Main(string[] args)
-		{
-			var builder = WebApplication.CreateBuilder(args);
+    opts.UseSqlServer(builder.Configuration[
+        "ConnectionStrings:ProductConnection"]);
+    opts.EnableSensitiveDataLogging(true);
+});
 
-			_ = builder.Services.AddDbContext<DataContext>(opts =>
-			{
-				_ = opts.UseSqlServer(builder.Configuration["ConnectionStrings:ProductConnection"]);
-				_ = opts.EnableSensitiveDataLogging(true);
-			});
+var app = builder.Build();
 
-			var app = builder.Build();
+const string BASEURL = "api/products";
 
-			_ = app.UseMiddleware<TestMiddleware>();
+app.MapGet($"{BASEURL}/{{id}}", async (HttpContext context,
+        DataContext data) =>
+{
+    string? id = context.Request.RouteValues["id"] as string;
+    if (id != null)
+    {
+        Product? p = data.Products.Find(long.Parse(id));
+        if (p == null)
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+        else
+        {
+            context.Response.ContentType = "application/json";
+            await context.Response
+                .WriteAsync(JsonSerializer.Serialize<Product>(p));
+        }
+    }
+});
 
-			_ = app.MapGet("/", () => "Hello World!");
+app.MapGet(BASEURL, async (HttpContext context, DataContext data) =>
+{
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsync(JsonSerializer
+        .Serialize<IEnumerable<Product>>(data.Products));
+});
 
-			// Cria uma scope e obtem o serviço necessário para popular o banco de dados  
-			// (essa abordagem é necessária porque o DataContext é registrado como scoped por padrão)  
-			// como scoped, ele é criado uma vez por requisição, e não uma vez por aplicação  
-			// essa abordagem faz o papel que um request faria, mas sem a necessidade de um request  
-			using (var scope = app.Services.CreateScope())
-			{
-				var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-				SeedData.SeedDatabase(context);
-			}
+app.MapPost(BASEURL, async (HttpContext context, DataContext data) =>
+{
+    Product? p = await
+        JsonSerializer.DeserializeAsync<Product>(context.Request.Body);
+    if (p != null)
+    {
+        await data.AddAsync(p);
 
-			await app.RunAsync().ConfigureAwait(false);
-		}
-	}
-}
+
+        await data.SaveChangesAsync();
+        context.Response.StatusCode = StatusCodes.Status200OK;
+    }
+});
+
+app.MapGet("/", () => "Hello World!");
+
+var context = app.Services.CreateScope().ServiceProvider
+    .GetRequiredService<DataContext>();
+SeedData.SeedDatabase(context);
+
+app.Run();
