@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
 
+    [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
@@ -33,8 +33,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>
-                SaveProduct([FromBody] ProductBindingTarget target)
+        public async Task<IActionResult>SaveProduct(ProductBindingTarget target)
         {
             Product p = target.ToProduct();
             await context.Products.AddAsync(p);
@@ -43,7 +42,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPut]
-        public async Task UpdateProduct([FromBody] Product product)
+        public async Task UpdateProduct(Product product)
         {
             context.Update(product);
             await context.SaveChangesAsync();
@@ -63,7 +62,6 @@ namespace WebApp.Controllers
         [HttpGet("redirect")]
         public IActionResult Redirect()
         {
-            //return Redirect("/api/products/1");
             return RedirectToAction(nameof(GetProduct), new { Id = 1 });
         }
     }
