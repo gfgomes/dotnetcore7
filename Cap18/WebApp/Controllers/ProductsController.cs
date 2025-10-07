@@ -3,7 +3,6 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
@@ -33,7 +32,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>SaveProduct(ProductBindingTarget target)
+        public async Task<IActionResult> SaveProduct(ProductBindingTarget target)
         {
             Product p = target.ToProduct();
             await context.Products.AddAsync(p);

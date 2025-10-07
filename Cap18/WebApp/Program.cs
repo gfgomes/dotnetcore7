@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WebApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DataContext>(opts => {
+builder.Services.AddDbContext<DataContext>(opts =>
+{
     opts.UseSqlServer(builder.Configuration[
         "ConnectionStrings:ProductConnection"]);
     opts.EnableSensitiveDataLogging(true);
@@ -11,12 +14,17 @@ builder.Services.AddDbContext<DataContext>(opts => {
 
 builder.Services.AddControllers();
 
+builder.Services.Configure<JsonOptions>(opts =>
+{
+    opts.JsonSerializerOptions.DefaultIgnoreCondition
+        = JsonIgnoreCondition.WhenWritingNull;
+});
+
 var app = builder.Build();
 
 app.MapControllers();
 
-app.MapGet("/", () => "Hello World!");
-
+app.MapGet("/", () => "Hello World!!");
 
 var context = app.Services.CreateScope().ServiceProvider
     .GetRequiredService<DataContext>();
