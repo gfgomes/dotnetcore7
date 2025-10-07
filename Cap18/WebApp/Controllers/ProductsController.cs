@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableRateLimiting("fixedWindow")]
     public class ProductsController : ControllerBase
     {
         private DataContext context;
@@ -21,6 +23,7 @@ namespace WebApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [DisableRateLimiting]
         public async Task<IActionResult> GetProduct(long id)
         {
             Product? p = await context.Products.FindAsync(id);
