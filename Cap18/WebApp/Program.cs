@@ -32,6 +32,12 @@ builder.Services.Configure<MvcNewtonsoftJsonOptions>(opts =>
     opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
+builder.Services.Configure<MvcOptions>(options =>
+{
+    options.RespectBrowserAcceptHeader = true;   // respeita o Accept do cliente
+    options.ReturnHttpNotAcceptable = true;      // envia 406 se não suportar o tipo
+});
+
 var app = builder.Build();
 
 app.UseRateLimiter();
