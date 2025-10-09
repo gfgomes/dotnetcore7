@@ -28,7 +28,7 @@ builder.Services.AddRateLimiter(opts =>
 builder.Services.Configure<JsonOptions>(opts =>
 {
     opts.JsonSerializerOptions.DefaultIgnoreCondition
-        = JsonIgnoreCondition.WhenWritingNull;
+        = JsonIgnoreCondition.WhenWritingNull; // Serializador json ignora nulos
 });
 
 var app = builder.Build();
