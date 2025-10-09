@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
+//using System.Text.Json.Serialization; 
 using Microsoft.AspNetCore.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +13,8 @@ builder.Services.AddDbContext<DataContext>(opts =>
     opts.EnableSensitiveDataLogging(true);
 });
 
-builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddRateLimiter(opts =>
 {
@@ -25,22 +26,23 @@ builder.Services.AddRateLimiter(opts =>
     });
 });
 
-builder.Services.Configure<JsonOptions>(opts =>
+//builder.Services.Configure<JsonOptions>(opts => {
+//    opts.JsonSerializerOptions.DefaultIgnoreCondition 
+//        = JsonIgnoreCondition.WhenWritingNull;
+//});
+
+builder.Services.Configure<MvcNewtonsoftJsonOptions>(opts =>
 {
-    opts.JsonSerializerOptions.DefaultIgnoreCondition
-        = JsonIgnoreCondition.WhenWritingNull; // Serializador json ignora nulos
-    opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // Ignora ciclos de referência
+    opts.SerializerSettings.NullValueHandling
+        = Newtonsoft.Json.NullValueHandling.Ignore;
+    opts.SerializerSettings.ReferenceLoopHandling
+        = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
 var app = builder.Build();
 
-app.UseRateLimiter(); // Middleware obrigatório para aplicar as políticas de limitação de taxa
+app.UseRateLimiter();
 
-// Aplica a todos os controladores a política "fixedWindow"
-// Esta política pode ser substituída por controladores e ações EnableRateLimiting e DisableRateLimiting.
-//app.MapControllers().RequireRateLimiting("fixedWindow");
-
-// sem política global — aplicará só onde houver atributo
 app.MapControllers();
 
 app.MapGet("/", () => "Hello World!");
