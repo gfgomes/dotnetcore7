@@ -18,8 +18,6 @@ namespace WebApp.Models
 
         public Product ToProduct() => new Product()
         {
-
-
             Name = this.Name,
             Price = this.Price,
             CategoryId = this.CategoryId,
