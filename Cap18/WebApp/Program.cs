@@ -29,6 +29,7 @@ builder.Services.Configure<JsonOptions>(opts =>
 {
     opts.JsonSerializerOptions.DefaultIgnoreCondition
         = JsonIgnoreCondition.WhenWritingNull; // Serializador json ignora nulos
+    opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // Ignora ciclos de referência
 });
 
 var app = builder.Build();
