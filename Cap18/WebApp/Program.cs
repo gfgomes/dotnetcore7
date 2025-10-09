@@ -38,9 +38,18 @@ builder.Services.Configure<MvcOptions>(options =>
     options.ReturnHttpNotAcceptable = true;      // envia 406 se não suportar o tipo
 });
 
+builder.Services.AddOutputCache(opts => {
+    opts.AddPolicy("30sec", policy => {
+        policy.Cache();
+        policy.Expire(TimeSpan.FromSeconds(30));
+    });
+});
+
 var app = builder.Build();
 
 app.UseRateLimiter();
+
+app.UseOutputCache();
 
 app.MapControllers();
 
