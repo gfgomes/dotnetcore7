@@ -24,6 +24,8 @@ namespace WebApp.Controllers
 
         [HttpGet("{id}")]
         [DisableRateLimiting]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProduct(long id)
         {
             Product? p = await context.Products.FindAsync(id);
