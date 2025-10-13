@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -27,6 +27,14 @@ namespace WebApp.Controllers
         public IActionResult Common()
         {
             return View();
+        }
+        public IActionResult WrongModel()
+        {
+            return View("Watersports", "Hello, World!");
+        }
+        public IActionResult List()
+        {
+            return View(context.Products);
         }
     }
 }

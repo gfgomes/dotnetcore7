@@ -16,10 +16,16 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.MapControllers();
 app.MapControllerRoute("Default",
-    "{controller=Home}/{action=Index}/{id?}"); // mesmo padr„o que definir app.MapDefaultControllerRoute();
+    "{controller=Home}/{action=Index}/{id?}"); // mesmo padr√£o que definir app.MapDefaultControllerRoute();
 
-var context = app.Services.CreateScope().ServiceProvider
-    .GetRequiredService<DataContext>();
-SeedData.SeedDatabase(context);
+
+using(var scope = app.Services.CreateScope())
+{
+    var serviceProviderDatacontext = scope.ServiceProvider.GetRequiredService<DataContext>();
+    SeedData.SeedDatabase(serviceProviderDatacontext);
+}
+//var context = app.Services.CreateScope().ServiceProvider
+//    .GetRequiredService<DataContext>();
+//SeedData.SeedDatabase(context);
 
 app.Run();

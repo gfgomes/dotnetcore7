@@ -1,0 +1,173 @@
+# EditorConfig é aplicado recursivamente
+root = true
+
+# Regra padrão para todos os arquivos
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C# (.NET Core)
+[*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+dotnet_sort_system_directives_first = true
+csharp_new_line_before_open_brace = all
+csharp_indent_case_contents = true
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# YAML (GitHub Actions, Docker Compose etc.)
+[*.yml]
+indent_style = space
+indent_size = 2
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+
+# Shell scripts
+[*.sh]
+end_of_line = lf
+
+# Dart (Flutter)
+[*.dart]
+indent_style = space
+indent_size = 2
+
+# JavaScript e TypeScript (React, Vue)
+[*.js]
+indent_style = space
+indent_size = 2
+
+[*.ts]
+indent_style = space
+indent_size = 2
+
+# Vue single file components
+[*.vue]
+indent_style = space
+indent_size = 2
+
+# HTML e Razor
+[*.html]
+indent_style = space
+indent_size = 2
+
+[*.cshtml]
+indent_style = space
+indent_size = 2
+
+# CSS e SCSS
+[*.css]
+indent_style = space
+indent_size = 2
+
+[*.scss]
+indent_style = space
+indent_size = 2
+
+
+###########################################################
+# 🧩 Seção Adicional - Roslyn Analyzers e Boas Práticas .NET
+# Este bloco complementa o arquivo existente sem remover
+# as regras já definidas para outras linguagens.
+###########################################################
+
+[*.cs]
+# -------------------------------
+# Roslyn Analyzers - Qualidade de Código
+# -------------------------------
+dotnet_analyzer_diagnostic.category-Design.severity = warning
+dotnet_analyzer_diagnostic.category-Performance.severity = warning
+dotnet_analyzer_diagnostic.category-Security.severity = error
+dotnet_analyzer_diagnostic.category-Reliability.severity = error
+dotnet_analyzer_diagnostic.category-Maintainability.severity = warning
+dotnet_analyzer_diagnostic.category-Usage.severity = warning
+dotnet_analyzer_diagnostic.category-Naming.severity = suggestion
+
+# Tratamento de exceções
+dotnet_diagnostic.CA1031.severity = warning  # Evitar capturar Exception genérica
+dotnet_diagnostic.CA2200.severity = warning  # Não relançar exceções incorretamente
+
+# Async / Await
+#dotnet_diagnostic.CA2007.severity = error    # Esperar sempre com ConfigureAwait(false)
+dotnet_diagnostic.CA2012.severity = warning  # Evitar acessar resultados de Task diretamente
+
+# Disposable e recursos
+dotnet_diagnostic.CA2000.severity = error    # Não deixar objetos IDisposable sem Dispose
+dotnet_diagnostic.CA2213.severity = warning  # Dispose deve chamar base.Dispose
+dotnet_diagnostic.CA1001.severity = warning  # Classes com campos IDisposable devem ser IDisposable
+
+# Naming conventions (prefixo _ para campos privados)
+dotnet_naming_rule.private_fields_underscore_style.symbols = private_fields
+dotnet_naming_rule.private_fields_underscore_style.style = underscore_prefix
+dotnet_naming_rule.private_fields_underscore_style.severity = suggestion
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_style.underscore_prefix.required_prefix = _
+dotnet_naming_style.underscore_prefix.capitalization = camel_case
+
+# Performance
+dotnet_diagnostic.CA1822.severity = warning  # Tornar métodos estáticos quando possível
+dotnet_diagnostic.CA1802.severity = suggestion # Tornar constantes valores imutáveis
+
+# Segurança
+dotnet_diagnostic.CA2100.severity = error    # Evitar SQL Injection
+dotnet_diagnostic.CA5350.severity = error    # Não usar algoritmos criptográficos inseguros
+dotnet_diagnostic.CA5351.severity = error    # Não usar SHA1 ou MD5
+
+# ASP.NET Core e EF Core específicos
+dotnet_diagnostic.ASP0001.severity = warning
+dotnet_diagnostic.EF1000.severity = warning
+
+###########################################################
+# Configurações adicionais para outras linguagens
+# (mantendo compatibilidade multi-linguagem)
+###########################################################
+
+[*.js]
+indent_style = space
+indent_size = 2
+charset = utf-8
+insert_final_newline = true
+
+[*.ts]
+indent_style = space
+indent_size = 2
+charset = utf-8
+insert_final_newline = true
+
+[*.html]
+indent_style = space
+indent_size = 2
+charset = utf-8
+insert_final_newline = true
+
+[*.css]
+indent_style = space
+indent_size = 2
+charset = utf-8
+insert_final_newline = true
+
+[*.json]
+indent_style = space
+indent_size = 2
+charset = utf-8
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+insert_final_newline = true
+charset = utf-8
+
+###########################################################
+# Fim da Seção Adicional
+###########################################################
