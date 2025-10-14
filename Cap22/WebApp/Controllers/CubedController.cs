@@ -8,7 +8,6 @@ namespace WebApp.Controllers
         {
             return View("Cubed");
         }
-
         public IActionResult Cube(double num)
         {
             TempData["value"] = num.ToString();
