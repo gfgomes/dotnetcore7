@@ -34,10 +34,42 @@ namespace WebApp.Components
 
         //Exemplo retornando fragmento de html que não será codificada, ou seja, será renderizada como html (This is a <h3><i>string</i></h3>)
         //Deve ter cuidado ao usar HtmlString para evitar vulnerabilidades XSS.
-        public IViewComponentResult Invoke()
+        //public IViewComponentResult Invoke()
+        //{
+        //    return new HtmlContentViewComponentResult(
+        //        new HtmlString("This is a <h3><i>string</i></h3>"));
+        //}
+
+        //public string Invoke()
+        //{
+        //    if (RouteData.Values["controller"] != null)
+        //    {
+        //        return "Controller Request";
+        //    }
+        //    else
+        //    {
+        //        return "Razor Page Request";
+        //    }
+        //}
+        //public IViewComponentResult Invoke(string themeName)
+        //{
+        //    ViewBag.Theme = themeName;
+        //    return View(new CityViewModel
+        //    {
+        //        Cities = data.Cities.Count(),
+        //        Population = data.Cities.Sum(c => c.Population)
+        //    });
+        //}
+
+        public IViewComponentResult Invoke(string themeName = "success")
         {
-            return new HtmlContentViewComponentResult(
-                new HtmlString("This is a <h3><i>string</i></h3>"));
+            ViewBag.Theme = themeName;
+            return View(new CityViewModel
+            {
+                Cities = data.Cities.Count(),
+                Population = data.Cities.Sum(c => c.Population)
+            });
         }
+
     }
 }
