@@ -27,8 +27,6 @@ namespace WebApp.TagHelpers
             row.InnerHtml.AppendHtml(header);
 
             output.Content.SetHtmlContent(row);
-
-            
         }
     }
 }
