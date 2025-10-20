@@ -11,13 +11,15 @@ namespace WebApp.TagHelpers
         public string Format { get; set; } = "";
         public ModelExpression? For { get; set; }
 
-        public override void Process(TagHelperContext context, TagHelperOutput output)
+        public override void Process(TagHelperContext context,
+                TagHelperOutput output)
         {
 
             output.TagMode = TagMode.StartTagAndEndTag;
 
             TagBuilder th = new TagBuilder("th");
-            th.InnerHtml.Append(For?.Name ?? String.Empty);
+            th.InnerHtml.Append(For?.Name.Split(".").Last()
+                ?? String.Empty);
             output.Content.AppendHtml(th);
 
             TagBuilder td = new TagBuilder("td");
