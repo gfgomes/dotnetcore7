@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Controllers
 {
@@ -13,9 +14,10 @@ namespace WebApp.Controllers
         {
             context = dbContext;
         }
-
         public async Task<IActionResult> Index(long id = 1)
         {
+            ViewBag.Categories = new SelectList(context.Categories, "CategoryId", "Name");
+
             return View("Form", await context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
@@ -39,5 +41,7 @@ namespace WebApp.Controllers
         {
             return View();
         }
+
+
     }
 }

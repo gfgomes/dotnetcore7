@@ -7,6 +7,8 @@
 
 <form asp-action="submitform" method="post" id="htmlform">
     <div class="form-group">
+
+
         <label asp-for="ProductId"></label>
         <input class="form-control" asp-for="ProductId" />
     </div>
@@ -23,10 +25,12 @@
 #pragma warning disable CS8602
         }
         <label asp-for="Category.Name">Category</label>
-        <input class="form-control" asp-for="Category.Name" />
         @{
 #pragma warning restore CS8602
         }
+        <select class="form-control" asp-for="CategoryId" asp-items="@ViewBag.Categories">
+                
+        </select>
     </div>
     <div class="form-group">
         @{
