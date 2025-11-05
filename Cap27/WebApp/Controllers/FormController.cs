@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Controllers
 {
-
+    [AutoValidateAntiforgeryToken]
     public class FormController : Controller
     {
         private DataContext context;
@@ -14,10 +14,11 @@ namespace WebApp.Controllers
         {
             context = dbContext;
         }
+
         public async Task<IActionResult> Index(long id = 1)
         {
-            ViewBag.Categories = new SelectList(context.Categories, "CategoryId", "Name");
-
+            ViewBag.Categories = new SelectList(context.Categories,
+                "CategoryId", "Name");
             return View("Form", await context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
@@ -28,11 +29,9 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult SubmitForm()
         {
-            foreach (string key in
-                    Request.Form.Keys.Where(k => !k.StartsWith("_")))
+            foreach (string key in Request.Form.Keys)
             {
-                TempData[key] = string.Join(", ",
-                    (string?)Request.Form[key]);
+                TempData[key] = string.Join(", ", (string?)Request.Form[key]);
             }
             return RedirectToAction(nameof(Results));
         }
@@ -41,7 +40,5 @@ namespace WebApp.Controllers
         {
             return View();
         }
-
-
     }
 }
